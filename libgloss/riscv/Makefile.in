@@ -7,6 +7,8 @@ gloss_hdrs = \
 
 gloss_srcs = \
 	nanosleep.c \
+	syscall_internal.c \
+	malloc_wrapper.c \
 	sys_access.c \
 	sys_chdir.c \
 	sys_chmod.c \

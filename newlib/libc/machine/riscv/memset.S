@@ -84,4 +84,6 @@ memset:
   add a2, a2, a5
   bleu a2, t1, .Ltiny
   j .Laligned
+.global memset_end
+memset_end:
   .size	memset, .-memset

@@ -1003,8 +1003,8 @@ extern Void_t*     sbrk();
 #ifdef INTERNAL_NEWLIB
 
 #define cALLOc		_calloc_r
-#define fREe		_free_r
-#define mALLOc		_malloc_r
+#define fREe		_usf_free_r
+#define mALLOc		_usf_malloc_r
 #define mEMALIGn	_memalign_r
 #define rEALLOc		_realloc_r
 #define vALLOc		_valloc_r
