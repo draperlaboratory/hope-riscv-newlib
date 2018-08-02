@@ -10,7 +10,7 @@
 strcmp:
   or    a4, a0, a1
   li    t2, -1
-  and   a4, a4, SZREG-1
+  andi   a4, a4, SZREG-1
   bnez  a4, .Lmisaligned
 
 #if SZREG == 4
@@ -32,8 +32,8 @@ strcmp:
     .if \i+1-\n
       bne   a2, a3, .Lmismatch
     .else
-      add   a0, a0, \n*SZREG
-      add   a1, a1, \n*SZREG
+      addi   a0, a0, \n*SZREG
+      addi   a1, a1, \n*SZREG
       beq   a2, a3, .Lloop
       # fall through to .Lmismatch
     .endif
@@ -42,8 +42,8 @@ strcmp:
   .macro foundnull i n
     .ifne \i
       .Lnull\i:
-      add   a0, a0, \i*SZREG
-      add   a1, a1, \i*SZREG
+      addi   a0, a0, \i*SZREG
+      addi   a1, a1, \i*SZREG
       .ifeq \i-1
         .Lnull0:
       .endif
@@ -78,27 +78,27 @@ strcmp:
   sll   a5, a3, 32
   bne   a4, a5, .Lmismatch_upper
 #endif
-  sll   a4, a2, 16
-  sll   a5, a3, 16
+  slli   a4, a2, 16
+  slli   a5, a3, 16
   bne   a4, a5, .Lmismatch_upper
 
-  srl   a4, a2, 8*SZREG-16
-  srl   a5, a3, 8*SZREG-16
+  srli   a4, a2, 8*SZREG-16
+  srli   a5, a3, 8*SZREG-16
   sub   a0, a4, a5
-  and   a1, a0, 0xff
+  andi   a1, a0, 0xff
   bnez  a1, 1f
   ret
 
 .Lmismatch_upper:
-  srl   a4, a4, 8*SZREG-16
-  srl   a5, a5, 8*SZREG-16
+  srli   a4, a4, 8*SZREG-16
+  srli   a5, a5, 8*SZREG-16
   sub   a0, a4, a5
-  and   a1, a0, 0xff
+  andi   a1, a0, 0xff
   bnez  a1, 1f
   ret
 
-1:and   a4, a4, 0xff
-  and   a5, a5, 0xff
+1:andi   a4, a4, 0xff
+  andi   a5, a5, 0xff
   sub   a0, a4, a5
   ret
 
@@ -106,8 +106,8 @@ strcmp:
   # misaligned
   lbu   a2, 0(a0)
   lbu   a3, 0(a1)
-  add   a0, a0, 1
-  add   a1, a1, 1
+  addi   a0, a0, 1
+  addi   a1, a1, 1
   bne   a2, a3, 1f
   bnez  a2, .Lmisaligned
 
