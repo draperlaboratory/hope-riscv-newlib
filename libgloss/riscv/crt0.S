@@ -14,13 +14,19 @@ _start:
 .option pop
 
   # Clear the bss segment
-  la      a0, _edata
-  la      a2, _end
+  #la      a0, _edata
+  lui      a0, %hi(_edata)
+  addi    a0, a0, %lo(_edata)
+  #la      a2, _end
+  lui      a2, %hi(_end)
+  addi    a2, a2, %lo(_end)
   sub     a2, a2, a0
   li      a1, 0
   call    memset
 
-  la      a0, __libc_fini_array   # Register global termination functions
+  #la      a0, __libc_fini_array   # Register global termination functions
+  lui      a0, %hi(__libc_fini_array)   # Register global termination functions
+  addi     a0, a0, %lo(__libc_fini_array)
   call    atexit                  #  to be called upon exit
   call    __libc_init_array       # Run global initialization functions
 

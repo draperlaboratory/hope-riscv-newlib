@@ -75,7 +75,7 @@ __internal_syscall(long n, long _a0, long _a1, long _a2, long _a3, long _a4, lon
   register long syscall_id asm("a7") = n;
 #endif
 
-  asm volatile ("scall"
+  asm volatile ("ecall"
 		: "+r"(a0) : "r"(a1), "r"(a2), "r"(a3), "r"(a4), "r"(a5), "r"(syscall_id));
 
   if (a0 < 0)
