@@ -8,7 +8,7 @@ CONFIGURE_OPTIONS += --prefix=$(ISP_PREFIX)
 CONFIGURE_OPTIONS += --target=riscv32-unknown-elf
 CONFIGURE_OPTIONS += AR_FOR_TARGET=riscv32-unknown-elf-ar AS_FOR_TARGET=riscv32-unknown-elf-as LD_FOR_TARGET=riscv32-unknown-elf-ld RANLIB_FOR_TARGET=riscv32-unknown-elf-ranlib
 CONFIGURE_OPTIONS += CFLAGS_FOR_TARGET="-O0 -g -fuse-init-array"
-CONFIGURE_OPTIONS += CC_FOR_TARGET="clang -ffreestanding --target=riscv32-unknown-elf -ccc-gcc-name riscv32-unknown-elf-gcc -fuse-init-array"
+CONFIGURE_OPTIONS += CC_FOR_TARGET="$(ISP_PREFIX)bin/clang -ffreestanding --target=riscv32-unknown-elf -ccc-gcc-name riscv32-unknown-elf-gcc -fuse-init-array"
 
 all: build/Makefile
 	$(MAKE) -C build
