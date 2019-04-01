@@ -2,7 +2,7 @@
 .PHONY: install
 .PHONY: clean
 
-ISP_PREFIX ?= /opt/isp/
+ISP_PREFIX ?= $(HOME)/.local/isp/
 
 CONFIGURE_OPTIONS += --prefix=$(ISP_PREFIX)
 CONFIGURE_OPTIONS += --target=riscv32-unknown-elf
