@@ -57,6 +57,7 @@ setjmp:
 /* volatile void longjmp (jmp_buf, int);  */
   .globl  longjmp
   .type   longjmp, @function
+  .align 3
 longjmp:
 	REG_L ra,  0*SZREG(a0)
 	REG_L s0,  1*SZREG(a0)
@@ -72,6 +73,21 @@ longjmp:
 	REG_L s9, 10*SZREG(a0)
 	REG_L s10,11*SZREG(a0)
 	REG_L s11,12*SZREG(a0)
+
+# make sure we blow away any tags on the stack
+    addi sp, sp, -2 * SZREG
+    REG_S s0, 0(sp)
+    REG_S s1, SZREG(sp)
+    mv s0, sp
+    addi s0, s0, 2 * SZREG
+    REG_L s1, 13*SZREG(a0)
+    1:
+    REG_S zero, 0(s0)
+    addi s0, s0, SZREG
+    ble s0, s1, 1b
+    REG_L s0, 0(sp)
+    REG_L s1, SZREG(sp)
+
 	REG_L sp, 13*SZREG(a0)
 #else
 	REG_L sp, 3*SZREG(a0)
