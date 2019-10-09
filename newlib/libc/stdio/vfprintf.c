@@ -1622,7 +1622,30 @@ number:			if ((dprec = prec) >= 0)
 
 				case HEX:
 					do {
-						*--cp = xdigs[_uquad & 15];
+						char tempChar;
+						// check the value rather than using directly in xdigs
+						// array. _uquad may represent a pointer and have
+						// policy restrictions that interfere with direct use.
+						switch(_uquad & 15) {
+							case 0: tempChar = xdigs[0]; break;
+							case 1: tempChar = xdigs[1]; break;
+							case 2: tempChar = xdigs[2]; break;
+							case 3: tempChar = xdigs[3]; break;
+							case 4: tempChar = xdigs[4]; break;
+							case 5: tempChar = xdigs[5]; break;
+							case 6: tempChar = xdigs[6]; break;
+							case 7: tempChar = xdigs[7]; break;
+							case 8: tempChar = xdigs[8]; break;
+							case 9: tempChar = xdigs[9]; break;
+							case 10: tempChar = xdigs[10]; break;
+							case 11: tempChar = xdigs[11]; break;
+							case 12: tempChar = xdigs[12]; break;
+							case 13: tempChar = xdigs[13]; break;
+							case 14: tempChar = xdigs[14]; break;
+							case 15: tempChar = xdigs[15]; break;
+						}
+
+						*--cp = tempChar;
 						_uquad >>= 4;
 					} while (_uquad);
 					break;
