@@ -1,7 +1,7 @@
 .PHONY: all
 .PHONY: install
 .PHONY: clean
-.PHONY: rv32 rv64
+.PHONY: rv32 rv64 multilib
 
 ISP_PREFIX ?= $(HOME)/.local/isp/
 
@@ -28,6 +28,32 @@ CONFIGURE64_OPTIONS += AS_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-as
 CONFIGURE64_OPTIONS += LD_FOR_TARGET=$(ISP_PREFIX)/bin/lld
 CONFIGURE64_OPTIONS += RANLIB_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-ranlib
 
+#_____________________________________________________ Multilib flags
+CONFIGUREMULTI_OPTIONS += --prefix=$(ISP_PREFIX)/clang_sysroot
+CONFIGUREMULTI_OPTIONS += --enable-multilib
+CONFIGUREMULTI_OPTIONS += --with-newlib
+CONFIGUREMULTI_OPTIONS += --target=riscv64-unknown-elf
+CONFIGUREMULTI_OPTIONS += --enable-newlib-iconv --enable-newlib-io-c99-formats
+CONFIGUREMULTI_OPTIONS += --enable-newlib-io-long-double
+CONFIGUREMULTI_OPTIONS += --enable-newlib-io-long-long
+CONFIGUREMULTI_OPTIONS += --enable-newlib-register-fini
+CONFIGUREMULTI_OPTIONS += CFLAGS_FOR_TARGET="-O0 -g -fuse-ld=lld -ffreestanding -mno-relax -mcmodel=medany --target=riscv64-unknown-elf"
+CONFIGUREMULTI_OPTIONS += CC_FOR_TARGET=$(ISP_PREFIX)/bin/clang
+
+CONFIGUREMULTI_OPTIONS += AR_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-ar
+CONFIGUREMULTI_OPTIONS += AS_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-as
+CONFIGUREMULTI_OPTIONS += LD_FOR_TARGET=$(ISP_PREFIX)/bin/lld
+CONFIGUREMULTI_OPTIONS += RANLIB_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-ranlib
+
+CONFIGUREMULTI_OPTIONS += CXX_FOR_TARGET=$(ISP_PREFIX)/bin/clang
+CONFIGUREMULTI_OPTIONS += DLLTOOL_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-dlltool
+
+CONFIGUREMULTI_OPTIONS += NM_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-nm
+CONFIGUREMULTI_OPTIONS += OBJDUMP_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-objdump
+CONFIGUREMULTI_OPTIONS += OBJCOPY_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-objcopy
+CONFIGUREMULTI_OPTIONS += READELF_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-readelf
+CONFIGUREMULTI_OPTIONS += STRIP_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-strip
+
 all: rv32 rv64
 
 rv64: build64/Makefile
@@ -35,6 +61,9 @@ rv64: build64/Makefile
 
 rv32: build32/Makefile
 	$(MAKE) -C build32
+
+multilib: build_multilib/Makefile
+	$(MAKE) -C build_multilib MULTILIB_CONF=$(PWD)/multilib.conf
 
 build32/Makefile:
 	mkdir -p build32
@@ -44,9 +73,18 @@ build64/Makefile:
 	mkdir -p build64
 	cd build64; ../configure $(CONFIGURE64_OPTIONS)
 
-install: rv32 rv64
-	$(MAKE) -C build32 install
-	$(MAKE) -C build64 install
+build_multilib/Makefile:
+	mkdir -p build_multilib
+	cd build_multilib; ../configure $(CONFIGUREMULTI_OPTIONS)
+
+install:
+	if [ -d build32 ]; then \
+	$(MAKE) -C build32 install; \
+	elif [ -d build64 ]; then \
+	$(MAKE) -C build64 install; \
+	elif [ -d build_multilib ]; then \
+	$(MAKE) -C build_multilib install; \
+	fi
 
 clean:
-	$(RM) -rf build32 build64
+	$(RM) -r build32 build64 build_multilib
