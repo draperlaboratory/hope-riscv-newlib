@@ -6,31 +6,29 @@
 ISP_PREFIX ?= $(HOME)/.local/isp/
 
 #_____________________________________________________ 32 bit flags
-CONFIGURE32_OPTIONS += --prefix=$(ISP_PREFIX)
+CONFIGURE32_OPTIONS += --prefix=$(ISP_PREFIX)/clang_sysroot
 CONFIGURE32_OPTIONS += --target=riscv32-unknown-elf
-CONFIGURE32_OPTIONS += CFLAGS_FOR_TARGET="-O0 -g -fuse-init-array"
-CONFIGURE32_OPTIONS += CC_FOR_TARGET="$(ISP_PREFIX)/bin/clang -ffreestanding --target=riscv32-unknown-elf -ccc-gcc-name riscv32-unknown-elf-gcc -fuse-init-array -march=rv32ima -mabi=ilp32"
-
-CONFIGURE32_OPTIONS += AR_FOR_TARGET=$(ISP_PREFIX)/bin/riscv64-unknown-elf-ar
-CONFIGURE32_OPTIONS += ARFLAGS="--target=elf32-littleriscv"
-CONFIGURE32_OPTIONS += AS_FOR_TARGET=$(ISP_PREFIX)/bin/riscv64-unknown-elf-as
+CONFIGURE32_OPTIONS += CFLAGS_FOR_TARGET="-O0 -g -fuse-init-array -ffreestanding -mno-relax --target=riscv32-unknown-elf -march=rv32ima -mabi=ilp32"
+CONFIGURE32_OPTIONS += LDFLAGS_FOR_TARGET="-fuse-ld=lld"
+CONFIGURE32_OPTIONS += CC_FOR_TARGET=$(ISP_PREFIX)/bin/clang
+CONFIGURE32_OPTIONS += AR_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-ar
+CONFIGURE32_OPTIONS += AS_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-as
 CONFIGURE32_OPTIONS += ASFLAGS="-march=rv32ima -mabi=ilp32"
-CONFIGURE32_OPTIONS += LD_FOR_TARGET=$(ISP_PREFIX)/bin/riscv64-unknown-elf-ld
-CONFIGURE32_OPTIONS += RANLIB_FOR_TARGET=$(ISP_PREFIX)/bin/riscv64-unknown-elf-ranlib
+CONFIGURE32_OPTIONS += LD_FOR_TARGET=$(ISP_PREFIX)/bin/lld
+CONFIGURE32_OPTIONS += RANLIB_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-ranlib
 
 #_____________________________________________________ 64 bit flags
-CONFIGURE64_OPTIONS += --prefix=$(ISP_PREFIX)
+CONFIGURE64_OPTIONS += --prefix=$(ISP_PREFIX)/clang_sysroot
 CONFIGURE64_OPTIONS += --target=riscv64-unknown-elf
-CONFIGURE64_OPTIONS += --enable-multilib
-CONFIGURE64_OPTIONS += CFLAGS_FOR_TARGET="-O0 -g -fuse-init-array"
-CONFIGURE64_OPTIONS += CC_FOR_TARGET="$(ISP_PREFIX)/bin/clang -ffreestanding --target=riscv64-unknown-elf -ccc-gcc-name riscv64-unknown-elf-gcc -fuse-init-array -march=rv64imafd -mabi=lp64d"
+CONFIGURE64_OPTIONS += CFLAGS_FOR_TARGET="-O0 -g -fuse-init-array -ffreestanding -mno-relax -mcmodel=medany --target=riscv64-unknown-elf -march=rv64imafd -mabi=lp64d"
+CONFIGURE64_OPTIONS += LDFLAGS_FOR_TARGET="-fuse-ld=lld"
+CONFIGURE64_OPTIONS += CC_FOR_TARGET=$(ISP_PREFIX)/bin/clang
+CONFIGURE64_OPTIONS += AR_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-ar
+CONFIGURE64_OPTIONS += AS_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-as
+CONFIGURE64_OPTIONS += LD_FOR_TARGET=$(ISP_PREFIX)/bin/lld
+CONFIGURE64_OPTIONS += RANLIB_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-ranlib
 
-CONFIGURE64_OPTIONS += AR_FOR_TARGET=$(ISP_PREFIX)/bin/riscv64-unknown-elf-ar
-CONFIGURE64_OPTIONS += AS_FOR_TARGET=$(ISP_PREFIX)/bin/riscv64-unknown-elf-as
-CONFIGURE64_OPTIONS += LD_FOR_TARGET=$(ISP_PREFIX)/bin/riscv64-unknown-elf-ld
-CONFIGURE64_OPTIONS += RANLIB_FOR_TARGET=$(ISP_PREFIX)/bin/riscv64-unknown-elf-ranlib
-
-all: rv64
+all: rv32 rv64
 
 rv64: build64/Makefile
 	$(MAKE) -C build64
@@ -47,16 +45,8 @@ build64/Makefile:
 	cd build64; ../configure $(CONFIGURE64_OPTIONS)
 
 install:
-	if [ -d build32 ]; then \
-	$(MAKE) -C build32 install; \
-	elif [ -d build64 ]; then \
-	$(MAKE) -C build64 install; \
-	fi
+	$(MAKE) -C build32 install
+	$(MAKE) -C build64 install
 
 clean:
-	if [ -d build32 ]; then \
-	$(RM) -r build32 \
-        fi
-	if [ -d build64 ]; then \
-	$(RM) -r build64 \
-	fi
+	$(RM) -rf build32 build64
