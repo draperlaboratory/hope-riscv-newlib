@@ -1,24 +1,52 @@
 .PHONY: all
 .PHONY: install
 .PHONY: clean
+.PHONY: rv32 rv64
 
 ISP_PREFIX ?= $(HOME)/.local/isp/
 
-CONFIGURE_OPTIONS += --prefix=$(ISP_PREFIX)
-CONFIGURE_OPTIONS += --target=riscv32-unknown-elf
-CONFIGURE_OPTIONS += AR_FOR_TARGET=$(ISP_PREFIX)/bin/riscv32-unknown-elf-ar AS_FOR_TARGET=$(ISP_PREFIX)/bin/riscv32-unknown-elf-as LD_FOR_TARGET=$(ISP_PREFIX)/bin/riscv32-unknown-elf-ld RANLIB_FOR_TARGET=$(ISP_PREFIX)/bin/riscv32-unknown-elf-ranlib
-CONFIGURE_OPTIONS += CFLAGS_FOR_TARGET="-O0 -g -fuse-init-array"
-CONFIGURE_OPTIONS += CC_FOR_TARGET="$(ISP_PREFIX)/bin/clang -ffreestanding --target=riscv32-unknown-elf -ccc-gcc-name riscv32-unknown-elf-gcc -fuse-init-array"
+#_____________________________________________________ 32 bit flags
+CONFIGURE32_OPTIONS += --prefix=$(ISP_PREFIX)/clang_sysroot
+CONFIGURE32_OPTIONS += --target=riscv32-unknown-elf
+CONFIGURE32_OPTIONS += CFLAGS_FOR_TARGET="-O0 -g -fuse-init-array -ffreestanding -mno-relax --target=riscv32-unknown-elf -march=rv32ima -mabi=ilp32"
+CONFIGURE32_OPTIONS += LDFLAGS_FOR_TARGET="-fuse-ld=lld"
+CONFIGURE32_OPTIONS += CC_FOR_TARGET=$(ISP_PREFIX)/bin/clang
+CONFIGURE32_OPTIONS += AR_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-ar
+CONFIGURE32_OPTIONS += AS_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-as
+CONFIGURE32_OPTIONS += ASFLAGS="-march=rv32ima -mabi=ilp32"
+CONFIGURE32_OPTIONS += LD_FOR_TARGET=$(ISP_PREFIX)/bin/lld
+CONFIGURE32_OPTIONS += RANLIB_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-ranlib
 
-all: build/Makefile
-	$(MAKE) -C build
+#_____________________________________________________ 64 bit flags
+CONFIGURE64_OPTIONS += --prefix=$(ISP_PREFIX)/clang_sysroot
+CONFIGURE64_OPTIONS += --target=riscv64-unknown-elf
+CONFIGURE64_OPTIONS += CFLAGS_FOR_TARGET="-O0 -g -fuse-init-array -ffreestanding -mno-relax -mcmodel=medany --target=riscv64-unknown-elf -march=rv64imafd -mabi=lp64d"
+CONFIGURE64_OPTIONS += LDFLAGS_FOR_TARGET="-fuse-ld=lld"
+CONFIGURE64_OPTIONS += CC_FOR_TARGET=$(ISP_PREFIX)/bin/clang
+CONFIGURE64_OPTIONS += AR_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-ar
+CONFIGURE64_OPTIONS += AS_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-as
+CONFIGURE64_OPTIONS += LD_FOR_TARGET=$(ISP_PREFIX)/bin/lld
+CONFIGURE64_OPTIONS += RANLIB_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-ranlib
 
-build/Makefile:
-	mkdir -p build
-	cd build; ../configure $(CONFIGURE_OPTIONS)
+all: rv32 rv64
+
+rv64: build64/Makefile
+	$(MAKE) -C build64
+
+rv32: build32/Makefile
+	$(MAKE) -C build32
+
+build32/Makefile:
+	mkdir -p build32
+	cd build32; ../configure $(CONFIGURE32_OPTIONS)
+
+build64/Makefile:
+	mkdir -p build64
+	cd build64; ../configure $(CONFIGURE64_OPTIONS)
 
 install:
-	$(MAKE) -C build install
+	$(MAKE) -C build32 install
+	$(MAKE) -C build64 install
 
 clean:
-	$(RM) -r build
+	$(RM) -rf build32 build64
