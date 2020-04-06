@@ -54,7 +54,7 @@ CONFIGUREMULTI_OPTIONS += OBJCOPY_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-objcopy
 CONFIGUREMULTI_OPTIONS += READELF_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-readelf
 CONFIGUREMULTI_OPTIONS += STRIP_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-strip
 
-all: rv32 rv64
+all: multilib
 
 rv64: build64/Makefile
 	$(MAKE) -C build64
