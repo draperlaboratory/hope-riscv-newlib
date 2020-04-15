@@ -210,7 +210,7 @@ HOST_EXPORTS = \
 	AR_FOR_TARGET="$(AR_FOR_TARGET)"; export AR_FOR_TARGET; \
 	AS_FOR_TARGET="$(AS_FOR_TARGET)"; export AS_FOR_TARGET; \
 	GCC_FOR_TARGET="$(GCC_FOR_TARGET)"; export GCC_FOR_TARGET; \
-	MULTILIB_CONF="$(MULTILIB_CONF)"; export MULTILIB_CONF; \
+	MULTILIB_CONF=@mlc@; export MULTILIB_CONF; \
 	LD_FOR_TARGET="$(LD_FOR_TARGET)"; export LD_FOR_TARGET; \
 	NM_FOR_TARGET="$(NM_FOR_TARGET)"; export NM_FOR_TARGET; \
 	OBJDUMP_FOR_TARGET="$(OBJDUMP_FOR_TARGET)"; export OBJDUMP_FOR_TARGET; \
@@ -276,7 +276,7 @@ BASE_TARGET_EXPORTS = \
 	AR="$(AR_FOR_TARGET)"; export AR; \
 	AS="$(COMPILER_AS_FOR_TARGET)"; export AS; \
 	CC="$(CC_FOR_TARGET) $(XGCC_FLAGS_FOR_TARGET) $$TFLAGS"; export CC; \
-	MLC="$(MULTILIB_CONF)"; export MLC; \
+	MLC=@mlc@; export MLC; \
 	CFLAGS="$(CFLAGS_FOR_TARGET)"; export CFLAGS; \
 	CONFIG_SHELL="$(SHELL)"; export CONFIG_SHELL; \
 	CPPFLAGS="$(CPPFLAGS_FOR_TARGET)"; export CPPFLAGS; \
@@ -895,7 +895,7 @@ EXTRA_TARGET_FLAGS = \
 	'AR=$$(AR_FOR_TARGET)' \
 	'AS=$(COMPILER_AS_FOR_TARGET)' \
 	'CC=$$(CC_FOR_TARGET) $$(XGCC_FLAGS_FOR_TARGET) $$(TFLAGS)' \
-	'MLC=$$(MULTILIB_CONF)' \
+	'MLC=@mlc@' \
 	'CFLAGS=$$(CFLAGS_FOR_TARGET)' \
 	'CXX=$$(CXX_FOR_TARGET) -B$$r/$$(TARGET_SUBDIR)/libstdc++-v3/src/.libs \
 	 -B$$r/$$(TARGET_SUBDIR)/libstdc++-v3/libsupc++/.libs \
@@ -36262,7 +36262,7 @@ configure-target-libstdc++-v3:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libstdc++-v3..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libstdc++-v3; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp; \
@@ -36306,7 +36306,7 @@ configure-stage1-target-libstdc++-v3:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE1_TFLAGS)"; \
 	echo "Checking multilib configuration for libstdc++-v3..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp; \
@@ -36350,7 +36350,7 @@ configure-stage2-target-libstdc++-v3:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE2_TFLAGS)"; \
 	echo "Checking multilib configuration for libstdc++-v3..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp; \
@@ -36395,7 +36395,7 @@ configure-stage3-target-libstdc++-v3:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE3_TFLAGS)"; \
 	echo "Checking multilib configuration for libstdc++-v3..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp; \
@@ -36440,7 +36440,7 @@ configure-stage4-target-libstdc++-v3:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE4_TFLAGS)"; \
 	echo "Checking multilib configuration for libstdc++-v3..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp; \
@@ -36485,7 +36485,7 @@ configure-stageprofile-target-libstdc++-v3:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEprofile_TFLAGS)"; \
 	echo "Checking multilib configuration for libstdc++-v3..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp; \
@@ -36530,7 +36530,7 @@ configure-stagefeedback-target-libstdc++-v3:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEfeedback_TFLAGS)"; \
 	echo "Checking multilib configuration for libstdc++-v3..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp; \
@@ -36575,7 +36575,7 @@ configure-stageautoprofile-target-libstdc++-v3:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEautoprofile_TFLAGS)"; \
 	echo "Checking multilib configuration for libstdc++-v3..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp; \
@@ -36620,7 +36620,7 @@ configure-stageautofeedback-target-libstdc++-v3:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEautofeedback_TFLAGS)"; \
 	echo "Checking multilib configuration for libstdc++-v3..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp $(TARGET_SUBDIR)/libstdc++-v3/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libstdc++-v3/multilib.tmp; \
@@ -37418,7 +37418,7 @@ configure-target-libsanitizer:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libsanitizer..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libsanitizer; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libsanitizer/multilib.tmp $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libsanitizer/multilib.tmp; \
@@ -37462,7 +37462,7 @@ configure-stage1-target-libsanitizer:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE1_TFLAGS)"; \
 	echo "Checking multilib configuration for libsanitizer..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libsanitizer/multilib.tmp $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libsanitizer/multilib.tmp; \
@@ -37506,7 +37506,7 @@ configure-stage2-target-libsanitizer:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE2_TFLAGS)"; \
 	echo "Checking multilib configuration for libsanitizer..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libsanitizer/multilib.tmp $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libsanitizer/multilib.tmp; \
@@ -37551,7 +37551,7 @@ configure-stage3-target-libsanitizer:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE3_TFLAGS)"; \
 	echo "Checking multilib configuration for libsanitizer..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libsanitizer/multilib.tmp $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libsanitizer/multilib.tmp; \
@@ -37596,7 +37596,7 @@ configure-stage4-target-libsanitizer:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE4_TFLAGS)"; \
 	echo "Checking multilib configuration for libsanitizer..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libsanitizer/multilib.tmp $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libsanitizer/multilib.tmp; \
@@ -37641,7 +37641,7 @@ configure-stageprofile-target-libsanitizer:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEprofile_TFLAGS)"; \
 	echo "Checking multilib configuration for libsanitizer..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libsanitizer/multilib.tmp $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libsanitizer/multilib.tmp; \
@@ -37686,7 +37686,7 @@ configure-stagefeedback-target-libsanitizer:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEfeedback_TFLAGS)"; \
 	echo "Checking multilib configuration for libsanitizer..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libsanitizer/multilib.tmp $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libsanitizer/multilib.tmp; \
@@ -37731,7 +37731,7 @@ configure-stageautoprofile-target-libsanitizer:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEautoprofile_TFLAGS)"; \
 	echo "Checking multilib configuration for libsanitizer..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libsanitizer/multilib.tmp $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libsanitizer/multilib.tmp; \
@@ -37776,7 +37776,7 @@ configure-stageautofeedback-target-libsanitizer:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEautofeedback_TFLAGS)"; \
 	echo "Checking multilib configuration for libsanitizer..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libsanitizer/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libsanitizer/multilib.tmp $(TARGET_SUBDIR)/libsanitizer/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libsanitizer/multilib.tmp; \
@@ -38574,7 +38574,7 @@ configure-target-libmpx:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libmpx..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libmpx; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libmpx/multilib.tmp $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libmpx/multilib.tmp; \
@@ -38618,7 +38618,7 @@ configure-stage1-target-libmpx:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE1_TFLAGS)"; \
 	echo "Checking multilib configuration for libmpx..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libmpx/multilib.tmp $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libmpx/multilib.tmp; \
@@ -38662,7 +38662,7 @@ configure-stage2-target-libmpx:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE2_TFLAGS)"; \
 	echo "Checking multilib configuration for libmpx..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libmpx/multilib.tmp $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libmpx/multilib.tmp; \
@@ -38707,7 +38707,7 @@ configure-stage3-target-libmpx:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE3_TFLAGS)"; \
 	echo "Checking multilib configuration for libmpx..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libmpx/multilib.tmp $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libmpx/multilib.tmp; \
@@ -38752,7 +38752,7 @@ configure-stage4-target-libmpx:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE4_TFLAGS)"; \
 	echo "Checking multilib configuration for libmpx..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libmpx/multilib.tmp $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libmpx/multilib.tmp; \
@@ -38797,7 +38797,7 @@ configure-stageprofile-target-libmpx:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEprofile_TFLAGS)"; \
 	echo "Checking multilib configuration for libmpx..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libmpx/multilib.tmp $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libmpx/multilib.tmp; \
@@ -38842,7 +38842,7 @@ configure-stagefeedback-target-libmpx:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEfeedback_TFLAGS)"; \
 	echo "Checking multilib configuration for libmpx..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libmpx/multilib.tmp $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libmpx/multilib.tmp; \
@@ -38887,7 +38887,7 @@ configure-stageautoprofile-target-libmpx:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEautoprofile_TFLAGS)"; \
 	echo "Checking multilib configuration for libmpx..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libmpx/multilib.tmp $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libmpx/multilib.tmp; \
@@ -38932,7 +38932,7 @@ configure-stageautofeedback-target-libmpx:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEautofeedback_TFLAGS)"; \
 	echo "Checking multilib configuration for libmpx..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libmpx/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libmpx/multilib.tmp $(TARGET_SUBDIR)/libmpx/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libmpx/multilib.tmp; \
@@ -39730,7 +39730,7 @@ configure-target-libvtv:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libvtv..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libvtv; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libvtv/multilib.tmp $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libvtv/multilib.tmp; \
@@ -39774,7 +39774,7 @@ configure-stage1-target-libvtv:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE1_TFLAGS)"; \
 	echo "Checking multilib configuration for libvtv..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libvtv/multilib.tmp $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libvtv/multilib.tmp; \
@@ -39818,7 +39818,7 @@ configure-stage2-target-libvtv:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE2_TFLAGS)"; \
 	echo "Checking multilib configuration for libvtv..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libvtv/multilib.tmp $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libvtv/multilib.tmp; \
@@ -39863,7 +39863,7 @@ configure-stage3-target-libvtv:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE3_TFLAGS)"; \
 	echo "Checking multilib configuration for libvtv..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libvtv/multilib.tmp $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libvtv/multilib.tmp; \
@@ -39908,7 +39908,7 @@ configure-stage4-target-libvtv:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE4_TFLAGS)"; \
 	echo "Checking multilib configuration for libvtv..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libvtv/multilib.tmp $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libvtv/multilib.tmp; \
@@ -39953,7 +39953,7 @@ configure-stageprofile-target-libvtv:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEprofile_TFLAGS)"; \
 	echo "Checking multilib configuration for libvtv..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libvtv/multilib.tmp $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libvtv/multilib.tmp; \
@@ -39998,7 +39998,7 @@ configure-stagefeedback-target-libvtv:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEfeedback_TFLAGS)"; \
 	echo "Checking multilib configuration for libvtv..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libvtv/multilib.tmp $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libvtv/multilib.tmp; \
@@ -40043,7 +40043,7 @@ configure-stageautoprofile-target-libvtv:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEautoprofile_TFLAGS)"; \
 	echo "Checking multilib configuration for libvtv..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libvtv/multilib.tmp $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libvtv/multilib.tmp; \
@@ -40088,7 +40088,7 @@ configure-stageautofeedback-target-libvtv:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEautofeedback_TFLAGS)"; \
 	echo "Checking multilib configuration for libvtv..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libvtv/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libvtv/multilib.tmp $(TARGET_SUBDIR)/libvtv/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libvtv/multilib.tmp; \
@@ -40887,7 +40887,7 @@ configure-target-libcilkrts:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libcilkrts..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libcilkrts; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libcilkrts/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libcilkrts/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libcilkrts/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libcilkrts/multilib.tmp $(TARGET_SUBDIR)/libcilkrts/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libcilkrts/multilib.tmp; \
@@ -41345,7 +41345,7 @@ configure-target-liboffloadmic:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for liboffloadmic..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/liboffloadmic; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/liboffloadmic/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/liboffloadmic/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/liboffloadmic/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/liboffloadmic/multilib.tmp $(TARGET_SUBDIR)/liboffloadmic/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/liboffloadmic/multilib.tmp; \
@@ -41803,7 +41803,7 @@ configure-target-libssp:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libssp..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libssp; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libssp/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libssp/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libssp/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libssp/multilib.tmp $(TARGET_SUBDIR)/libssp/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libssp/multilib.tmp; \
@@ -42261,7 +42261,7 @@ configure-target-newlib:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for newlib..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/newlib; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/newlib/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/newlib/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/newlib/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/newlib/multilib.tmp $(TARGET_SUBDIR)/newlib/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/newlib/multilib.tmp; \
@@ -42718,7 +42718,7 @@ configure-target-libgcc:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libgcc..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libgcc; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgcc/multilib.tmp $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgcc/multilib.tmp; \
@@ -42762,7 +42762,7 @@ configure-stage1-target-libgcc:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE1_TFLAGS)"; \
 	echo "Checking multilib configuration for libgcc..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgcc/multilib.tmp $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgcc/multilib.tmp; \
@@ -42806,7 +42806,7 @@ configure-stage2-target-libgcc:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE2_TFLAGS)"; \
 	echo "Checking multilib configuration for libgcc..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgcc/multilib.tmp $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgcc/multilib.tmp; \
@@ -42851,7 +42851,7 @@ configure-stage3-target-libgcc:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE3_TFLAGS)"; \
 	echo "Checking multilib configuration for libgcc..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgcc/multilib.tmp $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgcc/multilib.tmp; \
@@ -42896,7 +42896,7 @@ configure-stage4-target-libgcc:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE4_TFLAGS)"; \
 	echo "Checking multilib configuration for libgcc..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgcc/multilib.tmp $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgcc/multilib.tmp; \
@@ -42941,7 +42941,7 @@ configure-stageprofile-target-libgcc:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEprofile_TFLAGS)"; \
 	echo "Checking multilib configuration for libgcc..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgcc/multilib.tmp $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgcc/multilib.tmp; \
@@ -42986,7 +42986,7 @@ configure-stagefeedback-target-libgcc:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEfeedback_TFLAGS)"; \
 	echo "Checking multilib configuration for libgcc..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgcc/multilib.tmp $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgcc/multilib.tmp; \
@@ -43031,7 +43031,7 @@ configure-stageautoprofile-target-libgcc:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEautoprofile_TFLAGS)"; \
 	echo "Checking multilib configuration for libgcc..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgcc/multilib.tmp $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgcc/multilib.tmp; \
@@ -43076,7 +43076,7 @@ configure-stageautofeedback-target-libgcc:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEautofeedback_TFLAGS)"; \
 	echo "Checking multilib configuration for libgcc..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgcc/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgcc/multilib.tmp $(TARGET_SUBDIR)/libgcc/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgcc/multilib.tmp; \
@@ -43870,7 +43870,7 @@ configure-target-libbacktrace:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libbacktrace..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libbacktrace; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libbacktrace/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libbacktrace/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libbacktrace/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libbacktrace/multilib.tmp $(TARGET_SUBDIR)/libbacktrace/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libbacktrace/multilib.tmp; \
@@ -44328,7 +44328,7 @@ configure-target-libquadmath:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libquadmath..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libquadmath; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libquadmath/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libquadmath/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libquadmath/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libquadmath/multilib.tmp $(TARGET_SUBDIR)/libquadmath/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libquadmath/multilib.tmp; \
@@ -44786,7 +44786,7 @@ configure-target-libgfortran:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libgfortran..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libgfortran; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgfortran/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgfortran/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgfortran/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgfortran/multilib.tmp $(TARGET_SUBDIR)/libgfortran/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgfortran/multilib.tmp; \
@@ -45244,7 +45244,7 @@ configure-target-libobjc:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libobjc..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libobjc; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libobjc/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libobjc/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libobjc/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libobjc/multilib.tmp $(TARGET_SUBDIR)/libobjc/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libobjc/multilib.tmp; \
@@ -45702,7 +45702,7 @@ configure-target-libgo:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libgo..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libgo; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgo/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgo/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgo/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgo/multilib.tmp $(TARGET_SUBDIR)/libgo/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgo/multilib.tmp; \
@@ -46160,7 +46160,7 @@ configure-target-libtermcap:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libtermcap..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libtermcap; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libtermcap/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libtermcap/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libtermcap/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libtermcap/multilib.tmp $(TARGET_SUBDIR)/libtermcap/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libtermcap/multilib.tmp; \
@@ -46553,7 +46553,7 @@ configure-target-winsup:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for winsup..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/winsup; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/winsup/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/winsup/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/winsup/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/winsup/multilib.tmp $(TARGET_SUBDIR)/winsup/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/winsup/multilib.tmp; \
@@ -47011,7 +47011,7 @@ configure-target-libgloss:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libgloss..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libgloss; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgloss/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgloss/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgloss/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgloss/multilib.tmp $(TARGET_SUBDIR)/libgloss/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgloss/multilib.tmp; \
@@ -47464,7 +47464,7 @@ configure-target-libffi:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libffi..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libffi; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libffi/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libffi/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libffi/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libffi/multilib.tmp $(TARGET_SUBDIR)/libffi/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libffi/multilib.tmp; \
@@ -47912,7 +47912,7 @@ configure-target-libjava:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libjava..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libjava; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libjava/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libjava/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libjava/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libjava/multilib.tmp $(TARGET_SUBDIR)/libjava/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libjava/multilib.tmp; \
@@ -48370,7 +48370,7 @@ configure-target-zlib:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for zlib..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/zlib; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/zlib/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/zlib/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/zlib/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/zlib/multilib.tmp $(TARGET_SUBDIR)/zlib/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/zlib/multilib.tmp; \
@@ -48828,7 +48828,7 @@ configure-target-boehm-gc:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for boehm-gc..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/boehm-gc; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/boehm-gc/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/boehm-gc/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/boehm-gc/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/boehm-gc/multilib.tmp $(TARGET_SUBDIR)/boehm-gc/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/boehm-gc/multilib.tmp; \
@@ -49286,7 +49286,7 @@ configure-target-rda:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for rda..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/rda; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/rda/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/rda/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/rda/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/rda/multilib.tmp $(TARGET_SUBDIR)/rda/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/rda/multilib.tmp; \
@@ -49744,7 +49744,7 @@ configure-target-libada:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libada..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libada; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libada/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libada/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libada/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libada/multilib.tmp $(TARGET_SUBDIR)/libada/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libada/multilib.tmp; \
@@ -50201,7 +50201,7 @@ configure-target-libgomp:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libgomp..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libgomp; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgomp/multilib.tmp $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgomp/multilib.tmp; \
@@ -50245,7 +50245,7 @@ configure-stage1-target-libgomp:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE1_TFLAGS)"; \
 	echo "Checking multilib configuration for libgomp..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgomp/multilib.tmp $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgomp/multilib.tmp; \
@@ -50289,7 +50289,7 @@ configure-stage2-target-libgomp:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE2_TFLAGS)"; \
 	echo "Checking multilib configuration for libgomp..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgomp/multilib.tmp $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgomp/multilib.tmp; \
@@ -50334,7 +50334,7 @@ configure-stage3-target-libgomp:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE3_TFLAGS)"; \
 	echo "Checking multilib configuration for libgomp..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgomp/multilib.tmp $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgomp/multilib.tmp; \
@@ -50379,7 +50379,7 @@ configure-stage4-target-libgomp:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGE4_TFLAGS)"; \
 	echo "Checking multilib configuration for libgomp..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgomp/multilib.tmp $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgomp/multilib.tmp; \
@@ -50424,7 +50424,7 @@ configure-stageprofile-target-libgomp:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEprofile_TFLAGS)"; \
 	echo "Checking multilib configuration for libgomp..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgomp/multilib.tmp $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgomp/multilib.tmp; \
@@ -50469,7 +50469,7 @@ configure-stagefeedback-target-libgomp:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEfeedback_TFLAGS)"; \
 	echo "Checking multilib configuration for libgomp..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgomp/multilib.tmp $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgomp/multilib.tmp; \
@@ -50514,7 +50514,7 @@ configure-stageautoprofile-target-libgomp:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEautoprofile_TFLAGS)"; \
 	echo "Checking multilib configuration for libgomp..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgomp/multilib.tmp $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgomp/multilib.tmp; \
@@ -50559,7 +50559,7 @@ configure-stageautofeedback-target-libgomp:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	TFLAGS="$(STAGEautofeedback_TFLAGS)"; \
 	echo "Checking multilib configuration for libgomp..."; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libgomp/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libgomp/multilib.tmp $(TARGET_SUBDIR)/libgomp/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libgomp/multilib.tmp; \
@@ -51358,7 +51358,7 @@ configure-target-libitm:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libitm..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libitm; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libitm/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libitm/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libitm/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libitm/multilib.tmp $(TARGET_SUBDIR)/libitm/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libitm/multilib.tmp; \
@@ -51816,7 +51816,7 @@ configure-target-libatomic:
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	echo "Checking multilib configuration for libatomic..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libatomic; \
-	cat $(MULTILIB_CONF) > $(TARGET_SUBDIR)/libatomic/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > $(TARGET_SUBDIR)/libatomic/multilib.tmp 2> /dev/null; \
 	if test -r $(TARGET_SUBDIR)/libatomic/multilib.out; then \
 	  if cmp -s $(TARGET_SUBDIR)/libatomic/multilib.tmp $(TARGET_SUBDIR)/libatomic/multilib.out; then \
 	    rm -f $(TARGET_SUBDIR)/libatomic/multilib.tmp; \

@@ -213,7 +213,7 @@ HOST_EXPORTS = \
 	AR_FOR_TARGET="$(AR_FOR_TARGET)"; export AR_FOR_TARGET; \
 	AS_FOR_TARGET="$(AS_FOR_TARGET)"; export AS_FOR_TARGET; \
 	GCC_FOR_TARGET="$(GCC_FOR_TARGET)"; export GCC_FOR_TARGET; \
-	MULTILIB_CONF="$(MULTILIB_CONF)"; export MULTILIB_CONF; \
+	MULTILIB_CONF=@mlc@; export MULTILIB_CONF; \
 	LD_FOR_TARGET="$(LD_FOR_TARGET)"; export LD_FOR_TARGET; \
 	NM_FOR_TARGET="$(NM_FOR_TARGET)"; export NM_FOR_TARGET; \
 	OBJDUMP_FOR_TARGET="$(OBJDUMP_FOR_TARGET)"; export OBJDUMP_FOR_TARGET; \
@@ -279,7 +279,7 @@ BASE_TARGET_EXPORTS = \
 	AR="$(AR_FOR_TARGET)"; export AR; \
 	AS="$(COMPILER_AS_FOR_TARGET)"; export AS; \
 	CC="$(CC_FOR_TARGET) $(XGCC_FLAGS_FOR_TARGET) $$TFLAGS"; export CC; \
-	MLC="$(MULTILIB_CONF)"; export MLC; \
+	MLC=@mlc@; export MLC; \
 	CFLAGS="$(CFLAGS_FOR_TARGET)"; export CFLAGS; \
 	CONFIG_SHELL="$(SHELL)"; export CONFIG_SHELL; \
 	CPPFLAGS="$(CPPFLAGS_FOR_TARGET)"; export CPPFLAGS; \
@@ -669,7 +669,7 @@ EXTRA_TARGET_FLAGS = \
 	'AR=$$(AR_FOR_TARGET)' \
 	'AS=$(COMPILER_AS_FOR_TARGET)' \
 	'CC=$$(CC_FOR_TARGET) $$(XGCC_FLAGS_FOR_TARGET) $$(TFLAGS)' \
-	'MLC=$$(MULTILIB_CONF)' \
+	'MLC=@mlc@' \
 	'CFLAGS=$$(CFLAGS_FOR_TARGET)' \
 	'CXX=$$(CXX_FOR_TARGET) -B$$r/$$(TARGET_SUBDIR)/libstdc++-v3/src/.libs \
 	 -B$$r/$$(TARGET_SUBDIR)/libstdc++-v3/libsupc++/.libs \
@@ -1036,7 +1036,7 @@ configure-[+prefix+][+module+]: [+ IF bootstrap +][+ ELSE +]
 	[+ IF check_multilibs
 	+]echo "Checking multilib configuration for [+module+]..."; \
 	$(SHELL) $(srcdir)/mkinstalldirs [+subdir+]/[+module+]; \
-	cat $(MULTILIB_CONF) > [+subdir+]/[+module+]/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > [+subdir+]/[+module+]/multilib.tmp 2> /dev/null; \
 	if test -r [+subdir+]/[+module+]/multilib.out; then \
 	  if cmp -s [+subdir+]/[+module+]/multilib.tmp [+subdir+]/[+module+]/multilib.out; then \
 	    rm -f [+subdir+]/[+module+]/multilib.tmp; \
@@ -1081,7 +1081,7 @@ configure-stage[+id+]-[+prefix+][+module+]:
 	TFLAGS="$(STAGE[+id+]_TFLAGS)"; \
 	[+ IF check_multilibs
 	+]echo "Checking multilib configuration for [+module+]..."; \
-	cat $(MULTILIB_CONF) > [+subdir+]/[+module+]/multilib.tmp 2> /dev/null; \
+	cat @mlc@ > [+subdir+]/[+module+]/multilib.tmp 2> /dev/null; \
 	if test -r [+subdir+]/[+module+]/multilib.out; then \
 	  if cmp -s [+subdir+]/[+module+]/multilib.tmp [+subdir+]/[+module+]/multilib.out; then \
 	    rm -f [+subdir+]/[+module+]/multilib.tmp; \
