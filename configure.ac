@@ -3604,6 +3604,10 @@ case "$target" in
 esac
 AC_SUBST(compare_exclusions)
 
+# Specify multilib configuration file
+mlc=$topsrcdir/multilib.conf
+AC_SUBST(mlc)
+
 AC_CONFIG_FILES([Makefile],
   [sed "$extrasub_build" Makefile |
    sed "$extrasub_host" |

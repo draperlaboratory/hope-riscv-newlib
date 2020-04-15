@@ -555,6 +555,7 @@ ac_unique_file="move-if-change"
 enable_option_checking=no
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+mlc
 compare_exclusions
 host_shared
 stage2_werror_flag
@@ -14930,6 +14931,10 @@ case "$target" in
   hppa*-*-hpux*) compare_exclusions="gcc/cc*-checksum\$(objext) | */libgcc/lib2funcs* | gcc/ada/*tools/*" ;;
   powerpc*-ibm-aix*) compare_exclusions="gcc/cc*-checksum\$(objext) | gcc/ada/*tools/* | *libgomp*\$(objext)" ;;
 esac
+
+
+# Specify multilib configuration file
+mlc=$topsrcdir/multilib.conf
 
 
 ac_config_files="$ac_config_files Makefile"
