@@ -44,20 +44,21 @@ extern suffix_info stat_suffixes[];
    below path_types.  Ever. */
 enum pathconv_arg
 {
-  PC_SYM_FOLLOW		 = _BIT ( 0),
-  PC_SYM_NOFOLLOW	 = _BIT ( 1),
-  PC_SYM_NOFOLLOW_REP	 = _BIT ( 2),
-  PC_SYM_CONTENTS	 = _BIT ( 3),
-  PC_NOFULL		 = _BIT ( 4),
-  PC_NULLEMPTY		 = _BIT ( 5),
-  PC_NONULLEMPTY	 = _BIT ( 6),
-  PC_POSIX		 = _BIT ( 7),
-  PC_NOWARN		 = _BIT ( 8),
+  PC_SYM_FOLLOW		 = _BIT ( 0),	/* follow symlinks */
+  PC_SYM_NOFOLLOW	 = _BIT ( 1),	/* don't follow symlinks (but honor
+					   trailing slashes) */
+  PC_SYM_NOFOLLOW_REP	 = _BIT ( 2),	/* don't follow dir reparse point */
+  PC_SYM_CONTENTS	 = _BIT ( 3),	/* don't follow, return content only */
+  PC_NOFULL		 = _BIT ( 4),	/* keep relative path */
+  PC_NULLEMPTY		 = _BIT ( 5),	/* empty path is no error */
+  PC_NONULLEMPTY	 = _BIT ( 6),	/* override PC_NULLEMPTY default */
+  PC_POSIX		 = _BIT ( 7),	/* return normalized posix path */
   PC_OPEN		 = _BIT ( 9),	/* use open semantics */
   PC_CTTY		 = _BIT (10),	/* could later be used as ctty */
-  PC_SYM_NOFOLLOW_PROCFD = _BIT (11),
-  PC_KEEP_HANDLE	 = _BIT (12),
-  PC_NO_ACCESS_CHECK	 = _BIT (13),
+  PC_SYM_NOFOLLOW_PROCFD = _BIT (11),	/* allow /proc/PID/fd redirection */
+  PC_KEEP_HANDLE	 = _BIT (12),	/* keep handle for later stat calls */
+  PC_NO_ACCESS_CHECK	 = _BIT (13),	/* helper flag for error check */
+  PC_SYM_NOFOLLOW_DIR	 = _BIT (14),	/* don't follow a trailing slash */
   PC_DONT_USE		 = _BIT (31)	/* conversion to signed happens. */
 };
 
@@ -65,11 +66,12 @@ enum path_types
 {
   PATH_CTTY		= _BIT ( 0),	/* could later be used as ctty */
   PATH_OPEN		= _BIT ( 1),	/* use open semantics */
-  PATH_LNK		= _BIT ( 2),
-  PATH_REP		= _BIT ( 3),
-  PATH_SYMLINK		= _BIT ( 4),
-  PATH_SOCKET		= _BIT ( 5),
-  PATH_RESOLVE_PROCFD	= _BIT ( 6),
+  PATH_LNK		= _BIT ( 2),	/* *.lnk-type symlink */
+  PATH_REP		= _BIT ( 3),	/* reparse point known to Cygwin */
+  PATH_SYMLINK		= _BIT ( 4),	/* symlink understood by Cygwin */
+  PATH_SOCKET		= _BIT ( 5),	/* AF_UNIX socket file */
+  PATH_RESOLVE_PROCFD	= _BIT ( 6),	/* fd symlink via /proc */
+  PATH_REP_NOAPI	= _BIT ( 7),	/* rep. point unknown to WinAPI */
   PATH_DONT_USE		= _BIT (31)	/* conversion to signed happens. */
 };
 
@@ -178,7 +180,18 @@ class path_conv
   }
   int issymlink () const {return path_flags & PATH_SYMLINK;}
   int is_lnk_symlink () const {return path_flags & PATH_LNK;}
+  /* This indicates any known reparse point */
   int is_known_reparse_point () const {return path_flags & PATH_REP;}
+  /* This indicates any known reparse point, handled sanely by WinAPI.
+     The difference is crucial: WSL symlinks, for instance, are known
+     reparse points, so we want to open them as reparse points usually.
+     However they are foreign to WinAPI and not handled sanely.  If one
+     is part of $PATH, WinAPI functions may fail under the hood with
+     STATUS_IO_REPARSE_TAG_NOT_HANDLED. */
+  int is_winapi_reparse_point () const
+  {
+    return (path_flags & (PATH_REP | PATH_REP_NOAPI)) == PATH_REP;
+  }
   int isdevice () const {return dev.not_device (FH_FS) && dev.not_device (FH_FIFO);}
   int isfifo () const {return dev.is_device (FH_FIFO);}
   int isspecial () const {return dev.not_device (FH_FS);}
@@ -319,9 +332,11 @@ class path_conv
        contrast to statically allocated strings.  Calling device::dup()
        will duplicate the string if the source was allocated. */
     dev.dup ();
-    path = cstrdup (in_path);
+    if (in_path)
+      path = cstrdup (in_path);
     conv_handle.dup (pc.conv_handle);
-    posix_path = cstrdup(pc.posix_path);
+    if (pc.posix_path)
+      posix_path = cstrdup(pc.posix_path);
     if (pc.wide_path)
       {
 	wide_path = cwcsdup (uni_path.Buffer);
@@ -445,4 +460,4 @@ int normalize_win32_path (const char *, char *, char *&);
 int normalize_posix_path (const char *, char *, char *&);
 PUNICODE_STRING __reg3 get_nt_native_path (const char *, UNICODE_STRING&, bool);
 
-int __reg3 symlink_worker (const char *, const char *, bool);
+int __reg3 symlink_worker (const char *, path_conv &, bool);

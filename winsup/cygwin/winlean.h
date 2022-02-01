@@ -77,7 +77,7 @@ details. */
 /* So-called "Microsoft Account" SIDs (S-1-11-...) have a netbios domain name
    "MicrosoftAccounts".  The new "Application Container SIDs" (S-1-15-...)
    have a netbios domain name "APPLICATION PACKAGE AUTHORITY"
-   
+
    The problem is, DNLEN is 15, but these domain names have a length of 16
    resp. 29 chars :-P  So we override DNLEN here to be 31, so that calls
    to LookupAccountSid/Name don't fail if the buffer is based on DNLEN.
@@ -93,4 +93,26 @@ details. */
    use this function.  Use GetSystemWindowsDirectoryW. */
 #define GetWindowsDirectoryW dont_use_GetWindowsDirectory
 #define GetWindowsDirectoryA dont_use_GetWindowsDirectory
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* For the extended memory API. */
+#if __MINGW64_VERSION_MAJOR < 8
+#error "Version >= 8 of the w32api headers is required"
+#endif
+
+/* VirtualAlloc2 is declared in <w32api/memoryapi.h> if NTDDI_VERSION
+   >= NTDDI_WIN10_RS4 (a compile-time condition).  But we need the
+   declaration unconditionally, even though the function will only be
+   executed on systems that support it (a run-time condition). */
+PVOID WINAPI VirtualAlloc2 (HANDLE, PVOID, SIZE_T, ULONG, ULONG,
+			    PMEM_EXTENDED_PARAMETER, ULONG);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif /*_WINLEAN_H*/
