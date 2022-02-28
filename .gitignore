@@ -44,3 +44,5 @@ core
 lost+found
 
 build*
+
+/make_*.log
