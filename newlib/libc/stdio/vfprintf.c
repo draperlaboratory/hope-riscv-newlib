@@ -265,6 +265,15 @@ err:
 }
 #endif
 
+#ifdef ISP
+// Call with x = 1 to cause multiply by one, which strips color.
+// Can't use constant because then compiler removes.
+size_t strip_color(size_t p, int x)
+{
+  return p * x;
+}
+#endif
+
 int
 __ssprint_r (struct _reent *ptr,
        FILE *fp,
@@ -284,11 +293,20 @@ __ssprint_r (struct _reent *ptr,
 	}
 
         do {
-		while (len == 0) {
+
+#ifdef ISP
+		/* ISP: sometimes iov->iov_len can have a color, which causes internal color error.
+		 * We can multiply by 1 to remove color.
+		 */
+	        iov->iov_len = strip_color(iov->iov_len, 1);
+#endif
+		
+	       while (len == 0) {
 			p = iov->iov_base;
 			len = iov->iov_len;
 			iov++;
 		}
+		
 		w = fp->_w;
 		if (len >= w && fp->_flags & (__SMBF | __SOPT)) {
 			/* must be asprintf family */

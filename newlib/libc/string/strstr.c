@@ -60,7 +60,7 @@ QUICKREF
 #include <limits.h>
 
 #if defined(PREFER_SIZE_OVER_SPEED) || defined(__OPTIMIZE_SIZE__) \
-    || CHAR_BIT > 8
+  || CHAR_BIT > 8 || defined(ISP)
 
 /* Small and efficient strstr implementation.  */
 char *

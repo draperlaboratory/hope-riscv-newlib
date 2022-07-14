@@ -41,7 +41,7 @@ memset (void *m,
 {
   char *s = (char *) m;
 
-#if !defined(PREFER_SIZE_OVER_SPEED) && !defined(__OPTIMIZE_SIZE__)
+#if !defined(PREFER_SIZE_OVER_SPEED) && !defined(__OPTIMIZE_SIZE__) && !defined(ISP)
   unsigned int i;
   unsigned long buffer;
   unsigned long *aligned_addr;

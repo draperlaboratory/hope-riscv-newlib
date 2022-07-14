@@ -62,7 +62,7 @@ strncat (char *__restrict s1,
 	const char *__restrict s2,
 	size_t n)
 {
-#if defined(PREFER_SIZE_OVER_SPEED) || defined(__OPTIMIZE_SIZE__)
+#if defined(PREFER_SIZE_OVER_SPEED) || defined(__OPTIMIZE_SIZE__) || defined(ISP)
   char *s = s1;
 
   while (*s1)

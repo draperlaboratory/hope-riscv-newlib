@@ -48,18 +48,23 @@ QUICKREF
 #define TOO_SMALL(LEN)  ((LEN) < BIGBLOCKSIZE)
 
 /*SUPPRESS 20*/
+
+static int memmove_debug = 1;
 void *
 __inhibit_loop_to_libcall
 memmove (void *dst_void,
 	const void *src_void,
 	size_t length)
 {
-#if defined(PREFER_SIZE_OVER_SPEED) || defined(__OPTIMIZE_SIZE__)
+
+#if defined(PREFER_SIZE_OVER_SPEED) || defined(__OPTIMIZE_SIZE__) || defined(ISP)
+ memmove_debug = 2;
   char *dst = dst_void;
   const char *src = src_void;
-
+  
   if (src < dst && dst < src + length)
     {
+      memmove_debug = 3;      
       /* Have to copy backwards */
       src += length;
       dst += length;
@@ -70,6 +75,7 @@ memmove (void *dst_void,
     }
   else
     {
+      memmove_debug = 4;            
       while (length--)
 	{
 	  *dst++ = *src++;
@@ -82,9 +88,11 @@ memmove (void *dst_void,
   const char *src = src_void;
   long *aligned_dst;
   const long *aligned_src;
-
+  memmove_debug = 5;
+  
   if (src < dst && dst < src + length)
     {
+      memmove_debug = 6;                  
       /* Destructive overlap...have to copy backwards */
       src += length;
       dst += length;
@@ -95,11 +103,14 @@ memmove (void *dst_void,
     }
   else
     {
+      memmove_debug = 7;                        
       /* Use optimizing algorithm for a non-destructive copy to closely 
          match memcpy. If the size is small or either SRC or DST is unaligned,
          then punt into the byte copy loop.  This should be rare.  */
       if (!TOO_SMALL(length) && !UNALIGNED (src, dst))
         {
+
+	  memmove_debug = 8;                        	  
           aligned_dst = (long*)dst;
           aligned_src = (long*)src;
 
