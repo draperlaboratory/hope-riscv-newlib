@@ -295,10 +295,9 @@ __ssprint_r (struct _reent *ptr,
         do {
 
 #ifdef ISP
-		/* ISP: sometimes iov->iov_len can have a color, which causes internal color error.
-		 * We can multiply by 1 to remove color.
-		 */
+	        // ISP: sometimes iov->iov_len and fp->_w can have a color, which causes color mixing error later
 	        iov->iov_len = strip_color(iov->iov_len, 1);
+		fp->_w= strip_color(fp->_w, 1);
 #endif
 		
 	       while (len == 0) {
