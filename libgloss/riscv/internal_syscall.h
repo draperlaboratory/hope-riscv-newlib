@@ -44,7 +44,7 @@ __internal_syscall(long n, long _a0, long _a1, long _a2, long _a3, long _a4, lon
 }
 
 static inline long
-syscall_errno(long n, long _a0, long _a1, long _a2, long _a3, long _a4, long _a5)
+__internal_syscall_errno(long n, long _a0, long _a1, long _a2, long _a3, long _a4, long _a5)
 {
   long a0 = __internal_syscall (n, _a0, _a1, _a2, _a3, _a4, _a5);
 
@@ -53,5 +53,7 @@ syscall_errno(long n, long _a0, long _a1, long _a2, long _a3, long _a4, long _a5
   else
     return a0;
 }
+
+#define syscall_errno(n, a0, a1, a2, a3, a4, a5) __internal_syscall_errno((long) n, (long) a0, (long) a1, (long) a2, (long) a3, (long) a4, (long) a5)
 
 #endif

@@ -4,11 +4,14 @@
 .PHONY: rv32 rv64 multilib
 
 ISP_PREFIX ?= $(HOME)/.local/isp/
+ISP_CFLAGS += -O0 -g -fuse-init-array -ffreestanding -mno-relax -fno-jump-tables
+# add DISP if you want to add the changes Nick added to this lib
+# -DISP
 
 #_____________________________________________________ 32 bit flags
 CONFIGURE32_OPTIONS += --prefix=$(ISP_PREFIX)/clang_sysroot
 CONFIGURE32_OPTIONS += --target=riscv32-unknown-elf
-CONFIGURE32_OPTIONS += CFLAGS_FOR_TARGET="-O0 -g -fuse-init-array -ffreestanding -mno-relax --target=riscv32-unknown-elf -march=rv32ima -mabi=ilp32"
+CONFIGURE32_OPTIONS += CFLAGS_FOR_TARGET="$(ISP_CFLAGS) --target=riscv32-unknown-elf -march=rv32ima -mabi=ilp32"
 CONFIGURE32_OPTIONS += LDFLAGS_FOR_TARGET="-fuse-ld=lld"
 CONFIGURE32_OPTIONS += CC_FOR_TARGET=$(ISP_PREFIX)/bin/clang
 CONFIGURE32_OPTIONS += AR_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-ar
@@ -20,7 +23,7 @@ CONFIGURE32_OPTIONS += RANLIB_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-ranlib
 #_____________________________________________________ 64 bit flags
 CONFIGURE64_OPTIONS += --prefix=$(ISP_PREFIX)/clang_sysroot
 CONFIGURE64_OPTIONS += --target=riscv64-unknown-elf
-CONFIGURE64_OPTIONS += CFLAGS_FOR_TARGET="-O0 -g -fuse-init-array -ffreestanding -mno-relax -mcmodel=medany --target=riscv64-unknown-elf -march=rv64imafd -mabi=lp64d"
+CONFIGURE64_OPTIONS += CFLAGS_FOR_TARGET="$(ISP_CFLAGS) -mcmodel=medany --target=riscv64-unknown-elf -march=rv64imafd -mabi=lp64d"
 CONFIGURE64_OPTIONS += LDFLAGS_FOR_TARGET="-fuse-ld=lld"
 CONFIGURE64_OPTIONS += CC_FOR_TARGET=$(ISP_PREFIX)/bin/clang
 CONFIGURE64_OPTIONS += AR_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-ar
@@ -37,7 +40,8 @@ CONFIGUREMULTI_OPTIONS += --enable-newlib-iconv --enable-newlib-io-c99-formats
 CONFIGUREMULTI_OPTIONS += --enable-newlib-io-long-double
 CONFIGUREMULTI_OPTIONS += --enable-newlib-io-long-long
 CONFIGUREMULTI_OPTIONS += --enable-newlib-register-fini
-CONFIGUREMULTI_OPTIONS += CFLAGS_FOR_TARGET="-O0 -g -fuse-ld=lld -ffreestanding -mno-relax -mcmodel=medany --target=riscv64-unknown-elf"
+CONFIGUREMULTI_OPTIONS += CFLAGS_FOR_TARGET="$(ISP_CFLAGS) -mcmodel=medany --target=riscv64-unknown-elf"
+CONFIGUREMULTI_OPTIONS += LDFLAGS_FOR_TARGET="-fuse-ld=lld"
 CONFIGUREMULTI_OPTIONS += CC_FOR_TARGET=$(ISP_PREFIX)/bin/clang
 
 CONFIGUREMULTI_OPTIONS += AR_FOR_TARGET=$(ISP_PREFIX)/bin/llvm-ar
